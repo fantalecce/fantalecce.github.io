@@ -5,233 +5,146 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FantaLecce Ranking</title>
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     :root {
       --rosso-lecce: #d8232a;
       --giallo-lecce: #f4c300;
-      --giallo-chiaro: #fff4cc;
-      --sfondo: #fafafa;
-      --ombra: rgba(0, 0, 0, 0.15);
-      --testo-intestazione: #ffffff;
-      --gradiente-primario: linear-gradient(135deg, #d8232a, #b71c1c);
-      --gradiente-secondario: linear-gradient(135deg, #f4c300, #e6b800);
+      --oro: #ffd700;
+      --argento: #c0c0c0;
+      --bronzo: #cd7f32;
     }
 
     body {
-      font-family: "Poppins", Arial, sans-serif;
-      background: linear-gradient(180deg, var(--rosso-lecce), var(--giallo-lecce));
+      font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      background: linear-gradient(135deg, #d8232a 0%, #f4c300 100%);
       min-height: 100vh;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      color: #222;
+      padding: 20px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+      background-size: 50px 50px;
+      animation: movePattern 20s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes movePattern {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(50px, 50px); }
     }
 
     .container {
-      width: 100%;
       max-width: 800px;
       margin: 0 auto;
-      padding: 0 15px;
+      position: relative;
+      z-index: 1;
     }
 
     header {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-      margin: 25px 0;
-      padding: 20px;
-      background: var(--gradiente-primario);
-      border-radius: 20px;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.2);
-      width: 90%;
-      max-width: 600px;
-      position: relative;
-      overflow: hidden;
+      text-align: center;
+      margin-bottom: 40px;
+      animation: slideDown 0.8s ease;
     }
 
-    header::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 5px;
-      background: var(--gradiente-secondario);
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .header-content {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      border-radius: 25px;
+      padding: 30px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.2);
     }
 
     .logo-container {
-      display: flex;
-      align-items: center;
-      gap: 15px;
+      display: inline-block;
+      margin-bottom: 15px;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
     }
 
     header img {
-      height: 70px;
+      height: 80px;
       width: auto;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
     }
 
     h1 {
       color: white;
-      text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
-      font-size: 2.2em;
-      margin: 0;
-      text-align: center;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.4);
+      font-size: 2.8em;
+      font-weight: 800;
+      margin: 10px 0;
+      letter-spacing: -1px;
     }
 
-    .sottotitolo {
-      color: var(--giallo-chiaro);
+    .subtitle {
+      color: rgba(255, 255, 255, 0.95);
+      font-size: 1.1em;
+      font-weight: 300;
       margin-top: 5px;
-      font-size: 0.9em;
-      text-align: center;
-      font-weight: 500;
     }
 
     .card {
       background: white;
-      border-radius: 20px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      border-radius: 25px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
       overflow: hidden;
-      width: 90%;
-      max-width: 700px;
-      margin: 20px 0 30px;
-      animation: fadeIn 0.7s ease;
+      animation: fadeInUp 0.8s ease 0.2s both;
     }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    th, td {
-      padding: 16px 12px;
-      text-align: center;
-      border-bottom: 1px solid #f0f0f0;
-    }
-
-    thead th {
-      background: var(--gradiente-primario);
-      color: var(--testo-intestazione);
-      text-transform: uppercase;
-      font-weight: 700;
-      letter-spacing: 1px;
-      font-size: 0.95em;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.4);
-      position: sticky;
-      top: 0;
-    }
-
-    tbody tr:nth-child(odd) {
-      background: #f9f9f9;
-    }
-
-    tbody tr:hover {
-      background: var(--giallo-chiaro);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      transition: all 0.3s ease;
-    }
-
-    .posizione {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      font-weight: bold;
-      margin: 0 auto;
-    }
-
-    .primo {
-      background: linear-gradient(135deg, #FFD700, #FFA500);
-      color: #7a5a00;
-      box-shadow: 0 2px 5px rgba(255, 215, 0, 0.5);
-    }
-
-    .secondo {
-      background: linear-gradient(135deg, #C0C0C0, #A0A0A0);
-      color: #505050;
-      box-shadow: 0 2px 5px rgba(192, 192, 192, 0.5);
-    }
-
-    .terzo {
-      background: linear-gradient(135deg, #CD7F32, #A56A28);
-      color: #5a3d1a;
-      box-shadow: 0 2px 5px rgba(205, 127, 50, 0.5);
-    }
-
-    .altri {
-      background: #f0f0f0;
-      color: #666;
-    }
-
-    .nome-giocatore {
-      font-weight: 600;
-      text-align: left;
-      padding-left: 20px;
-    }
-
-    .punti {
-      font-weight: 700;
-      color: var(--rosso-lecce);
-      font-size: 1.1em;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
-    }
-
-    .pulsante-aggiorna {
-      background: var(--gradiente-primario);
-      color: white;
-      border: none;
-      border-radius: 50px;
-      padding: 12px 25px;
-      font-weight: 600;
-      cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin: 10px auto 20px;
-    }
-
-    .pulsante-aggiorna:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 6px 15px rgba(0,0,0,0.3);
-    }
-
-    .pulsante-aggiorna:active {
-      transform: translateY(1px);
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .loading {
-      display: none;
       text-align: center;
-      padding: 20px;
+      padding: 60px 20px;
       color: var(--rosso-lecce);
     }
 
     .spinner {
-      border: 4px solid rgba(216, 35, 42, 0.2);
-      border-radius: 50%;
+      border: 4px solid rgba(216, 35, 42, 0.1);
       border-top: 4px solid var(--rosso-lecce);
-      width: 30px;
-      height: 30px;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
       animation: spin 1s linear infinite;
-      margin: 0 auto 10px;
+      margin: 0 auto 20px;
     }
 
     @keyframes spin {
@@ -239,84 +152,250 @@
       100% { transform: rotate(360deg); }
     }
 
-    /* Responsive */
-    @media (max-width: 600px) {
-      .card {
-        width: 95%;
-        font-size: 0.9em;
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+
+    thead th {
+      background: linear-gradient(135deg, #b71c1c 0%, #d8232a 100%);
+      color: white;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      font-size: 0.85em;
+      padding: 20px 15px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    thead th:first-child {
+      border-radius: 25px 0 0 0;
+      width: 80px;
+    }
+
+    thead th:last-child {
+      border-radius: 0 25px 0 0;
+      width: 100px;
+    }
+
+    tbody tr {
+      transition: all 0.3s ease;
+      animation: slideIn 0.5s ease both;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(-20px);
       }
-      header img {
-        height: 50px;
+      to {
+        opacity: 1;
+        transform: translateX(0);
       }
-      h1 {
-        font-size: 1.6em;
+    }
+
+    tbody tr:nth-child(1) { animation-delay: 0.1s; }
+    tbody tr:nth-child(2) { animation-delay: 0.15s; }
+    tbody tr:nth-child(3) { animation-delay: 0.2s; }
+    tbody tr:nth-child(4) { animation-delay: 0.25s; }
+    tbody tr:nth-child(5) { animation-delay: 0.3s; }
+
+    tbody tr:hover {
+      background: linear-gradient(90deg, #fff9e6 0%, #fffef5 100%);
+      transform: scale(1.02);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    tbody tr:nth-child(even) {
+      background: #fafafa;
+    }
+
+    td {
+      padding: 18px 15px;
+      text-align: center;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    tbody tr:last-child td:first-child {
+      border-radius: 0 0 0 25px;
+    }
+
+    tbody tr:last-child td:last-child {
+      border-radius: 0 0 25px 0;
+    }
+
+    .position {
+      font-weight: 800;
+      font-size: 1.3em;
+      width: 60px;
+      height: 60px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
+      color: #666;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .position.gold {
+      background: linear-gradient(135deg, var(--oro), #ffed4e);
+      color: #8b6914;
+      box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    .position.silver {
+      background: linear-gradient(135deg, var(--argento), #d4d4d4);
+      color: #5a5a5a;
+      box-shadow: 0 4px 15px rgba(192, 192, 192, 0.4);
+    }
+
+    .position.bronze {
+      background: linear-gradient(135deg, var(--bronzo), #e5a157);
+      color: #6b4423;
+      box-shadow: 0 4px 15px rgba(205, 127, 50, 0.4);
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
       }
-      th, td {
-        padding: 12px 8px;
+      50% {
+        transform: scale(1.05);
+        box-shadow: 0 6px 20px rgba(255, 215, 0, 0.6);
       }
-      .posizione {
-        width: 26px;
-        height: 26px;
-        font-size: 0.9em;
-      }
+    }
+
+    .player-name {
+      font-weight: 600;
+      color: #222;
+      font-size: 1.1em;
+    }
+
+    tbody tr:nth-child(1) .player-name,
+    tbody tr:nth-child(2) .player-name,
+    tbody tr:nth-child(3) .player-name {
+      font-weight: 700;
+      font-size: 1.15em;
+    }
+
+    .points {
+      font-weight: 700;
+      font-size: 1.2em;
+      color: var(--rosso-lecce);
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    tbody tr:nth-child(1) .points,
+    tbody tr:nth-child(2) .points,
+    tbody tr:nth-child(3) .points {
+      font-size: 1.4em;
+      font-weight: 800;
     }
 
     footer {
-      color: white;
-      margin-top: auto;
-      margin-bottom: 15px;
-      font-size: 0.9em;
-      opacity: 0.9;
       text-align: center;
-      padding: 0 15px;
+      color: white;
+      margin-top: 30px;
+      font-size: 0.95em;
+      opacity: 0.9;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+      animation: fadeIn 1s ease 0.5s both;
     }
 
-    .aggiornamento {
-      font-size: 0.8em;
-      margin-top: 5px;
-      opacity: 0.7;
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 0.9; }
+    }
+
+    .trophy {
+      display: inline-block;
+      margin-left: 5px;
+      animation: rotate 4s linear infinite;
+    }
+
+    @keyframes rotate {
+      0%, 90%, 100% { transform: rotate(0deg); }
+      95% { transform: rotate(15deg); }
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2em;
+      }
+
+      header img {
+        height: 60px;
+      }
+
+      .header-content {
+        padding: 20px;
+      }
+
+      table {
+        font-size: 0.9em;
+      }
+
+      .position {
+        width: 50px;
+        height: 50px;
+        font-size: 1.1em;
+      }
+
+      td {
+        padding: 12px 8px;
+      }
+
+      .player-name {
+        font-size: 1em;
+      }
+
+      .points {
+        font-size: 1.1em;
+      }
     }
   </style>
 </head>
 <body>
   <div class="container">
     <header>
-      <div class="logo-container">
-        <img src="https://upload.wikimedia.org/wikipedia/it/thumb/3/36/US_Lecce_Stemma.svg/820px-US_Lecce_Stemma.svg.png" alt="Logo Lecce">
+      <div class="header-content">
+        <div class="logo-container">
+          <img src="https://upload.wikimedia.org/wikipedia/it/thumb/3/36/US_Lecce_Stemma.svg/820px-US_Lecce_Stemma.svg.png" alt="Logo Lecce">
+        </div>
         <h1>FantaLecce Ranking</h1>
+        <div class="subtitle">Classifica Ufficiale 2024/25</div>
       </div>
-      <p class="sottotitolo">Classifica ufficiale del campionato FantaLecce</p>
     </header>
-
-    <button class="pulsante-aggiorna" id="aggiorna">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-        <path d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
-        <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
-      </svg>
-      Aggiorna Classifica
-    </button>
 
     <div class="card">
       <table id="classifica">
         <thead>
           <tr>
-            <th>Posizione</th>
+            <th>Pos</th>
             <th>Giocatore</th>
             <th>Punti</th>
           </tr>
         </thead>
-        <tbody></tbody>
+        <tbody>
+          <tr>
+            <td colspan="3" class="loading">
+              <div class="spinner"></div>
+              <div>Caricamento classifica...</div>
+            </td>
+          </tr>
+        </tbody>
       </table>
     </div>
 
-    <div class="loading" id="loading">
-      <div class="spinner"></div>
-      Caricamento dati in corso...
-    </div>
-
     <footer>
-      ⚽ Aggiornato automaticamente dai dati di Google Sheets
-      <div class="aggiornamento" id="ultimo-aggiornamento"></div>
+      ⚽ Aggiornato automaticamente da Google Sheets <span class="trophy">🏆</span>
     </footer>
   </div>
 
@@ -325,83 +404,47 @@
     const API_KEY = "AIzaSyAlqDsWPDCl8kjr44nOoh2MEIgACt2RRFU";
     const RANGE = "Foglio1!A4:B43";
 
-    // Imposta l'ora dell'ultimo aggiornamento
-    function aggiornaTimestamp() {
-      const now = new Date();
-      const options = { 
-        day: '2-digit', 
-        month: '2-digit', 
-        year: 'numeric', 
-        hour: '2-digit', 
-        minute: '2-digit'
-      };
-      document.getElementById('ultimo-aggiornamento').textContent = 
-        `Ultimo aggiornamento: ${now.toLocaleString('it-IT', options)}`;
-    }
-
     async function caricaClassifica() {
-      const loading = document.getElementById('loading');
-      const tbody = document.querySelector("#classifica tbody");
-      
       try {
-        loading.style.display = 'block';
-        tbody.innerHTML = '';
-
         const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${RANGE}?key=${API_KEY}`;
         const res = await fetch(url);
         const data = await res.json();
         const rows = data.values || [];
 
-        // Ordina per punteggio (colonna 2)
-        const ordinato = rows.sort((a, b) => Number(b[1]) - Number(a[1]));
+        const ordinato = rows
+          .filter(row => row[0] && row[1])
+          .sort((a, b) => Number(b[1]) - Number(a[1]));
+
+        const tbody = document.querySelector("#classifica tbody");
+        tbody.innerHTML = "";
 
         ordinato.forEach((riga, i) => {
           const tr = document.createElement("tr");
           
-          // Determina la classe per la posizione
-          let classePosizione = 'altri';
-          if (i === 0) classePosizione = 'primo';
-          else if (i === 1) classePosizione = 'secondo';
-          else if (i === 2) classePosizione = 'terzo';
-          
+          let positionClass = "";
+          if (i === 0) positionClass = "gold";
+          else if (i === 1) positionClass = "silver";
+          else if (i === 2) positionClass = "bronze";
+
           tr.innerHTML = `
-            <td><span class="posizione ${classePosizione}">${i + 1}</span></td>
-            <td class="nome-giocatore">${riga[0]}</td>
-            <td class="punti">${riga[1]}</td>
+            <td><span class="position ${positionClass}">${i + 1}</span></td>
+            <td><span class="player-name">${riga[0]}</span></td>
+            <td><span class="points">${riga[1]}</span></td>
           `;
-          
-          // Aggiungi animazione per i primi tre
-          if (i < 3) {
-            tr.style.animationDelay = `${i * 0.1}s`;
-            tr.classList.add('animate__animated', 'animate__fadeInUp');
-          }
           
           tbody.appendChild(tr);
         });
-        
-        aggiornaTimestamp();
       } catch (err) {
         console.error("Errore nel caricamento:", err);
-        tbody.innerHTML = `
-          <tr>
-            <td colspan="3" style="text-align: center; padding: 30px; color: var(--rosso-lecce);">
-              Errore nel caricamento dati 😕<br>
-              <small>Controlla la connessione e riprova</small>
-            </td>
-          </tr>
-        `;
-      } finally {
-        loading.style.display = 'none';
+        document.querySelector("#classifica tbody").innerHTML =
+          `<tr><td colspan="3" style="padding: 40px; color: var(--rosso-lecce);">
+            ⚠️ Errore nel caricamento dati. Riprova tra poco.
+          </td></tr>`;
       }
     }
 
-    // Carica la classifica al caricamento della pagina
-    document.addEventListener('DOMContentLoaded', () => {
-      caricaClassifica();
-      
-      // Aggiungi evento al pulsante di aggiornamento
-      document.getElementById('aggiorna').addEventListener('click', caricaClassifica);
-    });
+    caricaClassifica();
+    setInterval(caricaClassifica, 60000);
   </script>
 </body>
 </html>
